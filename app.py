@@ -20,6 +20,7 @@ def hello_world(url):
             'original_url': new['original_url'],
             'short_url': request.url.split('new/')[0] + str(new['short_url'])
         }
+        print(r)
         return str(r)
     
     return str({
