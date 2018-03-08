@@ -5,7 +5,8 @@ from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 mongo = PyMongo(app)
-
+if 'MONGO_URI' in os.environ:
+    app['MONGO_URI'] = os.environ['MONGO_URI']
 
 @app.route('/new/<path:url>', methods=['GET'])
 def hello_world(url):
