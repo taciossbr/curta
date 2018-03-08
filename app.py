@@ -1,12 +1,13 @@
 import os
 import random
-from flask import Flask
+from flask import Flask, request
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 mongo = PyMongo(app)
 
-@app.route('/new/<url>')
+
+@app.route('/new/<path:url>', methods=['GET'])
 def hello_world(url):
 
     if url.startswith("https://") or url.startswith("http://"):
@@ -14,9 +15,12 @@ def hello_world(url):
             'original_url': url,
             'short_url': int(random.random()*100000000)
         }
-        print(new)
         mongo.db.urls.insert(new)
-        return "Hello, world"
+        r = {
+            'original_url': new['original_url'],
+            'short_url': request.url.split('new/')[0] + str(new['short_url'])
+        }
+        return str(r)
     
     return str({
         'error': "Wrong url format, make sure you have a valid protocol and real site."
