@@ -27,15 +27,10 @@ def generate_code_link():
 @app.route('/new/<path:url>', methods=['GET'])
 def new(url):
     if url.startswith("https://") or url.startswith("http://"):
-        while True:
-            try:
-                rand = generate_code_link()
-                new = URL(short_url=rand, original_url=url)
-                db.session.add(new)
-                db.session.commit()
-                break
-            except:
-                pass
+        rand = generate_code_link()
+        new = URL(short_url=rand, original_url=url)
+        db.session.add(new)
+        db.session.commit()
         r = {
             'original_url': new.original_url,
             'short_url': new.short_url
