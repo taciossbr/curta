@@ -104,7 +104,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# mongodb
-*.0
-*.ns
-*.lock
+# sqlite
+*.db
+
+#vscode
+settings.json
